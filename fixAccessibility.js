@@ -44,13 +44,26 @@ states.every(x => x === "true")
 }); // event
 }); // forEach
 
-setInitialState([...document.querySelectorAll(".timeline-container .timeline-time, .timeline-container .timeline-event")]);
+document.querySelectorAll(".timeline-container").forEach(timeline => {
+timeline.addEventListener("keydown", e => {
+if (isTrigger(e.target) && (e.key === "Enter" || e.key === " ")) {
+e.target.click();
+} // if
+}) // handler
+}); // forEach .timeline-container
+
+//setInitialState([...document.querySelectorAll(".timeline-container .timeline-time, .timeline-container .timeline-event")]);
 
 function setInitialState (triggers) {
 triggers.forEach(trigger => {
 const state = trigger.classList.contains("open")?  "true" : "false";
 trigger.querySelector("[role=button]").setAttribute("aria-expanded", state);
 }); // forEach
-} // fixTrigger
+} // setInitialState
+
+function isTrigger (element) {
+element.matches(".timeline-time [role=button], .timeline-event [role=button]");
+} // isTrigger
+ 
 
 } // fixAccessibility
