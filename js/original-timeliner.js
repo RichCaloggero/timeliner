@@ -130,9 +130,6 @@
                         openEvent($(value),$(value).next(settings.timelineEXContent));
                     });
 
-$(value).closest(settings.timelineSection).find(settings.timelineSectionMarker).find("[aria-expanded]")
-.attr("aria-expanded", "true");
-
                 });
             }
 
@@ -146,8 +143,7 @@ $(value).closest(settings.timelineSection).find(settings.timelineSectionMarker).
                 $(eventHeading).find('a')
                     .removeClass('closed')
                     .addClass('open')
-                    .attr("aria-expanded", "true")
-	.animate({ fontSize: settings.fontOpen }, settings.baseSpeed);
+                    .animate({ fontSize: settings.fontOpen }, settings.baseSpeed);
                 $(eventBody).show(settings.speed*settings.baseSpeed);
 
             }
@@ -156,7 +152,6 @@ $(value).closest(settings.timelineSection).find(settings.timelineSectionMarker).
 
                 $(eventHeading).find('a')
                     .animate({ fontSize: settings.fontClosed }, 0)
-.attr("aria-expanded", "false")
                     .removeClass('open')
                     .addClass('closed');
                 $(eventBody).hide(settings.speed*settings.baseSpeed);
@@ -197,9 +192,6 @@ $(value).closest(settings.timelineSection).find(settings.timelineSectionMarker).
                 $(settings.timelineContainer).on("click",settings.timelineTriggerContainer+" "+settings.timelineEventContainer,function(){
 
                     var currentId = $(this).attr('id');
-var currentSection = $(this).closest(settings.timelineSection);
-var currentSectionMarker = $(currentSection).find(settings.timelineSectionMarker);
-var allEvents = $(currentSection).find(settings.timelineTriggerAnchor);
 
                     // if the event is currently open
                     if($(this).find('a').is('.open'))
@@ -214,12 +206,8 @@ var allEvents = $(currentSection).find(settings.timelineTriggerAnchor);
                         }
 
                         openEvent($(this),$("#"+currentId+settings.EXContentIdSuffix));
+
                     }
-
-allEvents.find("a.open").length > 0?
-$(currentSectionMarker).find("[aria-expanded]").attr("aria-expanded", "true")
-: $(currentSectionMarker).find("[aria-expanded]").attr("aria-expanded", "false");
-
 
                 });
 
@@ -243,17 +231,11 @@ $(currentSectionMarker).find("[aria-expanded]").attr("aria-expanded", "true")
                     {
                         // if there are more events available than are displayed, then fully expand all events below MajorMarker
                         openEvent($(this).parents(settings.timelineSection).find(settings.timelineTriggerAnchor,settings.timelineTriggerContainer),$(this).parents(settings.timelineSection).find(settings.timelineEXContent));
-                    
-}else
+                    }else
                     {
                         closeEvent($(this).parents(settings.timelineSection).find(settings.timelineTriggerContainer),$(this).parents(settings.timelineSection).find(settings.timelineEXContent));
                     }
-                
-const state = $(this).find("[aria-expanded]").attr("aria-expanded");
-$(this).find("[aria-expanded]")
-.attr("aria-expanded", state === "true"? "false" : "true");
-
-});
+                });
 
                 // All Markers/Events
                 var el = settings.timelineContainer+" "+".timeline-toggle";

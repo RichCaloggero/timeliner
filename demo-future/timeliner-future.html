@@ -24,7 +24,7 @@
 				<h2 class="timeline-time"><span>2000</span></h2>
 				<dl class="timeline-series">
 					<span class="tick tick-before"></span>
-					<dt id="robots" class="timeline-event"><a>Robots</a></dt>
+					<dt id="robots" class="timeline-event start-open"><a>Robots</a></dt>
 					<span class="tick tick-after"></span>
 					<dd class="timeline-event-content" id="robotsEX">
 						<div class="media">
@@ -159,15 +159,15 @@
 	<script type="text/javascript" src="../js/timeliner.js"></script>
 <script src="../fixAccessibility.js"></script>
 <script>
-		$(document).ready(function() {
+		fixAccessibility();
+
+$(document).ready(function() {
 			$.timeliner({
 				timelineContainer:'#timeline',
 //							startState: 'flat',
 });
 			$('.venobox').venobox();
 		});
-
-fixAccessibility();
 </script>
 
 </body>

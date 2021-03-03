@@ -16,8 +16,16 @@ h3.querySelector("a").setAttribute("aria-expanded", "false");
 event.innerHTML = h3.outerHTML;
 }); // forEach dt
 
+document.querySelectorAll(".timeline-container").forEach(timeline => {
+timeline.addEventListener("keydown", e => {
+if (isTrigger(e.target) && (e.key === "Enter" || e.key === " ")) {
+e.target.click();
+} // if
+}) // handler
+}); // forEach .timeline-container
 
-document.querySelectorAll(".timeline-wrapper").forEach(wrapper => {
+
+/*document.querySelectorAll(".timeline-wrapper").forEach(wrapper => {
 wrapper.addEventListener("click", e => {
 if (! e.target.matches(".timeline-time [role=button], .timeline-event [role=button]")) return true;
 
@@ -43,14 +51,7 @@ states.every(x => x === "true")
 
 }); // event
 }); // forEach
-
-document.querySelectorAll(".timeline-container").forEach(timeline => {
-timeline.addEventListener("keydown", e => {
-if (isTrigger(e.target) && (e.key === "Enter" || e.key === " ")) {
-e.target.click();
-} // if
-}) // handler
-}); // forEach .timeline-container
+*/
 
 //setInitialState([...document.querySelectorAll(".timeline-container .timeline-time, .timeline-container .timeline-event")]);
 
