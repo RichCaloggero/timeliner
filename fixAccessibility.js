@@ -63,7 +63,7 @@ trigger.querySelector("[role=button]").setAttribute("aria-expanded", state);
 } // setInitialState
 
 function isTrigger (element) {
-element.matches(".timeline-time [role=button], .timeline-event [role=button]");
+return element.matches(".timeline-container [role=button]");
 } // isTrigger
  
 
