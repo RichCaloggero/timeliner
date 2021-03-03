@@ -1,5 +1,5 @@
 function fixAccessibility () {
-document.querySelectorAll(".timeline-container .timeline-time span").forEach(span => {
+document.querySelectorAll(".timeline-container h2 span").forEach(span => {
 span.setAttribute("role", "button");
 span.setAttribute("tabindex", "0");
 span.setAttribute("aria-expanded", "false");
