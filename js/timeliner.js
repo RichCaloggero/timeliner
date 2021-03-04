@@ -12,15 +12,18 @@
             }
             else {
                 $.timeliners.options.push(options);
-            }
-            $(document).ready(function() {
-                for (var i=0; i<$.timeliners.options.length; i++) {
-                    startTimeliner($.timeliners.options[i]);
-                }
-            });
-        }
+            } // if
 
-        function startTimeliner(options) {
+$(document).ready(function() {
+                for (var i=0; i<$.timeliners.options.length; i++) {
+startTimeliner($.timeliners.options[i]);
+                } // for
+            }); // ready
+
+} // $.timeliner
+        
+        
+function startTimeliner(options) {
             var settings = {
                 timelineContainer: options['timelineContainer'] || '#timeline',
                 // Container for the element holding the entire timeline (e.g. a DIV)
@@ -119,7 +122,8 @@
                 //sets the text of the expandAll selector after the timeline is fully expanded
                 // value: string
                 // default: - collapse all
-            };
+            }; // settings
+
 
             function openStartEvents(events) {
                 // show startOpen events
@@ -128,13 +132,13 @@
                     // first make sure all events in the series are visible (overriding flat mode), then show individual events per option settings
                     $(value).parents(settings.timelineTriggerContainer).show(settings.speed*settings.baseSpeed, function(){
                         openEvent($(value),$(value).next(settings.timelineEXContent));
-                    });
+                    }); // show
 
 $(value).closest(settings.timelineSection).find(settings.timelineSectionMarker).find("[aria-expanded]")
 .attr("aria-expanded", "true");
 
-                });
-            }
+                }); // each
+            } // openStartEvents
 
             function openEvent(eventHeading,eventBody) {
 
@@ -150,7 +154,7 @@ $(value).closest(settings.timelineSection).find(settings.timelineSectionMarker).
 	.animate({ fontSize: settings.fontOpen }, settings.baseSpeed);
                 $(eventBody).show(settings.speed*settings.baseSpeed);
 
-            }
+            } // openEvent
 
             function closeEvent(eventHeading,eventBody) {
 
@@ -160,15 +164,16 @@ $(value).closest(settings.timelineSection).find(settings.timelineSectionMarker).
                     .removeClass('open')
                     .addClass('closed');
                 $(eventBody).hide(settings.speed*settings.baseSpeed);
-            }
+            } // closeEvent
 
             if ($(settings.timelineContainer).data('started')) {
-                return;
+return;
                 // we already initialized this timelineContainer
             } else {
                 $(settings.timelineContainer).data('started', true);
                 $(settings.timelineContainer+" "+".timeline-toggle").html(settings.expandAllText);
                 $(settings.timelineContainer+" "+".collapseAll").html(settings.collapseAllText);
+addAccessibleMarkup(settings);
 
                 if(settings.startState==='flat')
                 {
@@ -211,17 +216,17 @@ var allEvents = $(currentSection).find(settings.timelineTriggerAnchor);
 
                         if( settings.oneOpen == true ) {
                             closeEvent($(this).parents(settings.timelineContainer).find(settings.timelineTriggerAnchor,settings.timelineTriggerContainer),$(this).parents(settings.timelineContainer).find(settings.timelineEXContent));
-                        }
+                        } // if
 
                         openEvent($(this),$("#"+currentId+settings.EXContentIdSuffix));
-                    }
+                    } // if
 
 allEvents.find("a.open").length > 0?
 $(currentSectionMarker).find("[aria-expanded]").attr("aria-expanded", "true")
 : $(currentSectionMarker).find("[aria-expanded]").attr("aria-expanded", "false");
 
 
-                });
+                }); // minor marker click handler
 
                 // Major Marker Click
                 // Overrides the 'oneOpen' option
@@ -234,10 +239,13 @@ $(currentSectionMarker).find("[aria-expanded]").attr("aria-expanded", "true")
                     // number of minor events already open
                     var numOpen = $(this).parents(settings.timelineSection).find('.open').length;
 
+// trigger
+var trigger = $(this).find("[aria-expanded]");
+
                     // This closes other items if oneOpen is true. It looks odd if an item in the section was open. Need to improve this.
                     if( settings.oneOpen == true ) {
                         closeEvent($(this).parents(settings.timelineContainer).find(settings.timelineTriggerAnchor,settings.timelineTriggerContainer),$(this).parents(settings.timelineContainer).find(settings.timelineEXContent));
-                    }
+                    } // if
 
                     if(numEvents > numOpen)
                     {
@@ -247,13 +255,14 @@ $(currentSectionMarker).find("[aria-expanded]").attr("aria-expanded", "true")
 }else
                     {
                         closeEvent($(this).parents(settings.timelineSection).find(settings.timelineTriggerContainer),$(this).parents(settings.timelineSection).find(settings.timelineEXContent));
-                    }
+                    } // if
                 
-const state = $(this).find("[aria-expanded]").attr("aria-expanded");
+const state = trigger.attr("aria-expanded");
 $(this).find("[aria-expanded]")
-.attr("aria-expanded", state === "true"? "false" : "true");
+.attr("aria-expanded",
+trigger.attr("aria-expanded") === "true"? "false" : "true");
 
-});
+}); // major marker click handler
 
                 // All Markers/Events
                 var el = settings.timelineContainer+" "+".timeline-toggle";
@@ -271,9 +280,32 @@ $(this).find("[aria-expanded]")
                         $(el).addClass('expanded').html(settings.collapseAllText);
 
 
-                    }
-                });
+                    } // if
+                }); // click handler
             }
         };
 
-})(jQuery);
+function addAccessibleMarkup (settings) {
+$(settings.timelineContainer).find(settings.timelineSectionMarker).find("span").attr({
+"aria-expanded": "false", role: "button", tabindex: "0"
+});
+
+$(settings.timelineContainer).find(settings.timelineTriggerContainer).attr({
+role: "none", "aria-roledescription": "event"
+});
+
+$(settings.timelineContainer).find(settings.timelineTriggerAnchor).find("a").attr({
+"aria-expanded": "false", role: "button", href: "#"
+});
+
+$(settings.timelineContainer).find(settings.timelineTriggerAnchor).find("a").wrap("<h3></h3>");
+
+$(settings.timelineContainer).on("keydown", $(settings.timelineContainer).find(settings.timelineSectionMarker+" a"), function (e) {
+if (e.key === "Enter" || e.key === " ") {
+e.target.click();
+} // if
+}); // keydown handler
+
+} // addAccessibilityMarkup 
+
+})(jQuery); // module

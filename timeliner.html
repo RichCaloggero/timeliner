@@ -267,14 +267,12 @@
 	</div>><!-- /.container -->
 
 	<!-- GLOBAL CORE SCRIPTS -->
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+	<script src="jquery-3.5.1.min.js"></script>
 	<script type="text/javascript" src="inc/colorbox.js"></script>
 	<script type="text/javascript" src="js/timeliner.js"></script>
 
-<script src="fixAccessibility.js"></script>
 <script>
 		$(document).ready(function() {
-			fixAccessibility();
 
 $.timeliner({});
 			$.timeliner({
@@ -287,9 +285,8 @@ $.timeliner({});
 			});
 			// Colorbox Modal
 			$(".CBmodal").colorbox({inline:true, initialWidth:100, maxWidth:682, initialHeight:100, transition:"elastic",speed:750});
-		});
+		}); // ready
 
-fixAccessibility();
 </script>
 
 </body>
