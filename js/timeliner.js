@@ -1,24 +1,28 @@
 /*
 * Timeliner.js
-* @version      2.31
+* @version      2.31.1
 * @copyright    Tarek Anandan (http://www.technotarek.com)
+* updated for accessibility by RJC
 */
 ;(function($) {
 
-        $.timeliner = function(options) {
+        $.timeliner = function(options = {}) {
             if ($.timeliners == null) {
                 $.timeliners = { options: [] };
                 $.timeliners.options.push(options);
-            }
-            else {
+            } else {
                 $.timeliners.options.push(options);
             } // if
 
 $(document).ready(function() {
-                for (var i=0; i<$.timeliners.options.length; i++) {
+startTimeliner(options);
+
+// rjc: removing loop which will attempt to start everything twice
+      /*for (var i=0; i<$.timeliners.options.length; i++) {
 startTimeliner($.timeliners.options[i]);
                 } // for
-            }); // ready
+            */
+}); // ready
 
 } // $.timeliner
         
@@ -123,6 +127,42 @@ function startTimeliner(options) {
                 // value: string
                 // default: - collapse all
             }; // settings
+//alert(`starting ${settings.timelineContainer}`);
+
+// rjc: moved function and handler definitions below; since functions are hoisted they don't have to be defined before use
+
+if ($(settings.timelineContainer).data('started')) {
+// rjc: this should never run since we start timeliner when we define it (see commented out for loop in $.timeliner() above)
+//alert("- already initialized; returning...");
+return; // we already initialized this timelineContainer
+            } else {
+                $(settings.timelineContainer).data('started', true);
+                $(settings.timelineContainer+" "+".timeline-toggle").html(settings.expandAllText);
+                $(settings.timelineContainer+" "+".collapseAll").html(settings.collapseAllText);
+addAccessibleMarkup(settings);
+
+                if(settings.startState==='flat')
+                {
+                    // hide all series (event headings)
+                    $(settings.timelineContainer+' '+settings.timelineTriggerContainer).hide();
+
+                    openStartEvents($(settings.startOpen));
+
+                }else if(settings.startState==='closed')
+                {
+                    // If startState option is set to closed, hide all the event contents; else, show fully expanded upon load
+
+                    // Close all items
+                    $(settings.timelineContainer+" "+settings.timelineEXContent).hide();
+
+                    openStartEvents($(settings.startOpen));
+
+                }else{
+
+                    // Open all items
+                    openEvent($(settings.timelineContainer+" "+settings.timelineTriggerContainer+" "+settings.timelineTriggerAnchor),$(settings.timelineContainer+" "+settings.timelineEXContent));
+
+                } // if
 
 
             function openStartEvents(events) {
@@ -166,38 +206,7 @@ $(value).closest(settings.timelineSection).find(settings.timelineSectionMarker).
                 $(eventBody).hide(settings.speed*settings.baseSpeed);
             } // closeEvent
 
-            if ($(settings.timelineContainer).data('started')) {
-return;
-                // we already initialized this timelineContainer
-            } else {
-                $(settings.timelineContainer).data('started', true);
-                $(settings.timelineContainer+" "+".timeline-toggle").html(settings.expandAllText);
-                $(settings.timelineContainer+" "+".collapseAll").html(settings.collapseAllText);
-addAccessibleMarkup(settings);
-
-                if(settings.startState==='flat')
-                {
-                    // hide all series (event headings)
-                    $(settings.timelineContainer+' '+settings.timelineTriggerContainer).hide();
-
-                    openStartEvents($(settings.startOpen));
-
-                }else if(settings.startState==='closed')
-                {
-                    // If startState option is set to closed, hide all the event contents; else, show fully expanded upon load
-
-                    // Close all items
-                    $(settings.timelineContainer+" "+settings.timelineEXContent).hide();
-
-                    openStartEvents($(settings.startOpen));
-
-                }else{
-
-                    // Open all items
-                    openEvent($(settings.timelineContainer+" "+settings.timelineTriggerContainer+" "+settings.timelineTriggerAnchor),$(settings.timelineContainer+" "+settings.timelineEXContent));
-
-                }
-
+            
                 // Minor Event Click
                 $(settings.timelineContainer).on("click",settings.timelineTriggerContainer+" "+settings.timelineEventContainer,function(){
 
