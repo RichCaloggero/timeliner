@@ -1,5 +1,22 @@
 # Timeliner
 
+## Accessibility
+
+I've updated the plugin to add the following:
+
+- all triggers  use `role="button"`, `aria-expanded`, are in tab order,  and respond to  space and enter keys;
+- minor markers (i.e. individual event triggers) use  `h3` headings;
+- trigger containers (`dl` elements by default) get `role="none"`;
+
+`aria-expanded` is maintained as follows:
+
+- when a major event is clicked, everything beneath it is toggled, and `aria-expanded` is set accordingly on the major event's trigger and on all contained minor event triggers;
+- when a minor event is clicked:
+   + `aria-expanded` is toggled on that trigger
+   + the corresponding major event's trigger gets `aria-expanded="true"` if any of it's minor events are open
+
+
+
 ## Overview
 Build a simple, interactive, historical timeline with HTML, CSS, and jQuery. The benefits of this timeline script are that it's (1) simple, (2) able to handle nearly any form of content (including images, video, audio), (3) printer friendly, and highly customizable with just CSS and HTML.
 
