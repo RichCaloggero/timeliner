@@ -1,74 +1,86 @@
 <!DOCTYPE html>
 <html>
-<head>
+	<head>
 	<meta charset="utf-8">
-<title>Demo</title>
+<title>details element Demo</title>
+<link rel="stylesheet" href="details-element.css" type="text/css" media="screen">
 
 </head>
 <body>
 	<div class="container">
 		<div id="timeline-js" class="timeline-container">
 
-			<button class="timeline-toggle">+ expand all</button>
+			<button aria-pressed="false" onclick="discloseAll($('#timeline-js')); toggleState(this)">Disclose All</button>
+<button aria-pressed="false" onclick="discloseMajorEvents($('#timeline-js')); toggleState(this)">Disclose All major events</button>
+<button aria-pressed="false" onclick="flatten($('#timeline-js')); toggleState(this)">Flatten</button>
 
 			<br class="clear">
 
-			<details>	
+			<details class="timeline-wrapper">	
 <summary><h2 class="milestone"><span>Concept</span></h2></summary>
 
-				<details>
-	<summary id="born" class="timeline-event"><span>The idea is born</span></summary>
-					<div>
+				<div class="timeline-series">
+<details>
+	<summary id="born" class="timeline-event"><h3><span>The idea is born</span></h3></summary>
+					<div class="timeline-event-content" id="bornEX">
 	<p>Two completely independent projects, one for the Institute for Educational Leadership and another for the Fund for Investigative Journalism, expressed interest in a timeline component for their website.</p>
 						<br class="clear">
 					</div><!-- /.timeline-event-content -->
-				</details><!-- /.timeline-series -->
+				</details>
+</div><!-- /.timeline-series -->
 			</details><!-- /.timeline-wrapper -->
 
 			<details class="timeline-wrapper">
 				<summary><h2 class="milestone"><span>Prototype</span></h2></summary>
-				<details>
-	<summary  id="realized" class="timeline-event"><span>The idea is realized</span></summary>
+
+<div class="timeline-series">
+<details>
+	<summary  id="realized" class="timeline-event"><h3><span>The idea is realized</span></h3></summary>
 					<div class="timeline-event-content" id="realizedEX">
 						<p>Jquery was heating up, so it was the perfect time to put together a working prototype. I toyed around with some variations, including some horizontal ones. Ultimately, I found the vertical version, similar to the current, the most flexible.</p>
 						<br class="clear">
 					</div><!-- /.timeline-event-content -->
-				</details><!-- /.timeline-series -->
+				</details>
+</div><!-- /.timeline-series -->
 			</details><!-- /.timeline-wrapper -->
 
 
-			<details>
+			<details class="timeline-wrapper">
 	<summary><h2 class="milestone"><span>Initial Integrations</span></h2></summary>
-				
+
+<div class="timeline-series">
 <details>
-	<summary id="ncld" class="timeline-event"><span>NCLD-Youth Disability History Timeline</span></summary>
-					
+	<summary id="ncld" class="timeline-event"><h3><span>NCLD-Youth Disability History Timeline</span></h3></summary>
+	
 <div class="timeline-event-content" id="ncldEX">
 						<p>The initial working code was first launched at <a href="http://www.ncld-youth.info/index.php?id=61">http://www.ncld-youth.info/index.php?id=61</a>. This version actually has come features that I like that I never implmented in the final plugin (e.g,. century > decade > year/event).</p>
 						<br class="clear">
 					</div><!-- /.timeline-event -->
 					</details><details>
-<summary id="power"><span>Investigating Power's Moments of Truth Timelines</span></summary>
+<summary id="power"><h3><span>Investigating Power's Moments of Truth Timelines</span></h3></summary>
 					<div class="timeline-event-content" id="powerEX">
 						<p>I really started to fine tune the code for InvestigatingPower.org. This was also the first time where all of the content was loaded via the <abbr title="content management system">CMS</abbr>, which was important given five timelines for a total of a few hundred data points.</p>
 
 							<br class="clear">
 					</div><!-- /.timeline-event-content -->
-				</details><!-- /.timeline-series -->
+				</details>
+</div><!-- /.timeline-series -->
 			</details><!-- /.timeline-wrapper -->
 
-			<details>
+			<details class="timeline-wrapper">
 	<summary><h2 class="milestone"><span>Open Sourced</span></h2></summary>
-				
-<details class="timeline-series">
-					<summary id="github" class="timeline-event"><a>GitHub Gets the Timeliner.js Jquery Plugin</a></summary>
+
+<div class="timeline-series">
+<details>
+					<summary id="github" class="timeline-event"><h3><a>GitHub Gets the Timeliner.js Jquery Plugin</a></h3></summary>
 					
 <div class="timeline-event-content" id="githubEX">
 						<p>I wanted to play around with GitHub. I wanted to learn some more Jquery, in particular a bit more about creating a plugin. Done.</p>
 
 							<br class="clear">
 					</div><!-- /.timeline-event-content -->
-				</details><!-- /.timeline-series -->
+				</details>
+</div><!-- /.timeline-series -->
 			</details><!-- /.timeline-wrapper -->
 
 			<br class="clear">
@@ -76,6 +88,33 @@
 
 	</div><!-- /.container -->
 
+<script>
+function discloseMajorEvents (timeline) {
+$$(".timeline-wrapper", timeline).forEach(x => x.setAttribute("open", ""));
+} // discloseMajorEvents
+
+function flatten (timeline) {
+$$("details", timeline).forEach(x => x.removeAttribute("open"));
+} // flatten
+
+function discloseAll (timeline) {
+$$("details", timeline).forEach(x => x.setAttribute("open", ""));
+} // discloseAll
+
+function toggleState (element) {
+const state = element.getAttribute("aria-pressed");
+element.setAttribute("aria-pressed", state === "true"? "false" : "true");
+} // toggleState
+
+function $ (selector, context = document) {
+return context.querySelector(selector);
+} // $
+
+function $$ (selector, context = document) {
+return context.querySelectorAll(selector);
+} // $$
+
+</script>
 
 
 </body>
