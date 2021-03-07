@@ -1,3 +1,4 @@
+
 # Timeliner
 
 ## Accessibility
@@ -5,7 +6,7 @@
 I've updated the plugin to add the following:
 
 - all triggers  use `role="button"`, `aria-expanded`, are in tab order,  and respond to  space and enter keys;
-- minor markers (i.e. individual event triggers) use  `h3` headings;
+- added an option to automatically add `h3` headings to minor event triggers (i.e. individual event triggers)
 - trigger containers (`dl` elements by default) get `role="none"`;
 
 `aria-expanded` is maintained as follows:
@@ -422,3 +423,14 @@ Timeliner.js by Tarek Anandan, version 2.x+, is licensed under a Creative Common
 
 ##### version 1.x
 Timeliner.js by Tarek Anandan, version 1.x, is licensed under a Creative Commons Attribution-ShareAlike 3.0 Unported License.
+
+
+# HTML-timeline
+
+# html-timeline
+
+This is an implementation of much of the behavior of the timeliner jQuery pluging (see below) using the html5 details element. A bit of javascript is used to add some global controls to each timeline, but this is completely optional.
+
+I've copied much of the structure from timeliner.js, most notably the default class names, and the main css file. However, since javascript is not needed for the major behavior, the class names are not necessary or can be changed as desired. If the timelineControl.js file is used to generate global controls, then the default timeliner.js class names should be used.
+
+
