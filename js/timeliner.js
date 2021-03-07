@@ -58,7 +58,13 @@ function startTimeliner(options) {
                 // default: .timeline-event
                 // note: changing this tag from the default will require modifications to the CSS file in order to retain default styling
 
-                timelineEventContainer: options['timelineEventContainer'] || 'dt',
+minorEventHeadings: options.minorEventHeadings || false,
+// (rjc) if true, wraps the anchor within each timelineTriggerAnchor in an h3 tag
+// value: true || false
+// default: false
+// note: this is probably best done in the markup; this option is for convenience
+                
+timelineEventContainer: options['timelineEventContainer'] || 'dt',
                 // Wrapper surrounding a series of events corresponding to the timelineSectionMarker
                 // value: tag or class selector
                 // default: dt
@@ -300,14 +306,14 @@ $(settings.timelineContainer).find(settings.timelineSectionMarker).find("span").
 });
 
 $(settings.timelineContainer).find(settings.timelineTriggerContainer).attr({
-role: "none", "aria-roledescription": "event"
+role: "none"
 });
 
 $(settings.timelineContainer).find(settings.timelineTriggerAnchor).find("a").attr({
 "aria-expanded": "false", role: "button", href: "#"
 });
 
-$(settings.timelineContainer).find(settings.timelineTriggerAnchor).find("a").wrap("<h3></h3>");
+if (settings.minorEventHeadings) $(settings.timelineContainer).find(settings.timelineTriggerAnchor).find("a").wrap("<h3></h3>");
 
 $(settings.timelineContainer).on("keydown", $(settings.timelineContainer).find(settings.timelineSectionMarker+" a"), function (e) {
 if (e.key === "Enter" || e.key === " ") {

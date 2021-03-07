@@ -2,8 +2,8 @@
 <html>
 	<head>
 	<meta charset="utf-8">
-<title>details element Demo</title>
-<link rel="stylesheet" href="details-element.css" type="text/css" media="screen">
+<title>HTML Timeline Demo</title>
+<link rel="stylesheet" href="html-timeline.css" type="text/css" media="screen">
 
 </head>
 <body>
@@ -15,7 +15,7 @@
 
 		<p>The content used in this demo is from <a href="https://www.technotarek.com/case-studies/investigating-power">InvestigatingPower.org</a>, one of two initial places where I implemented timeliner. InvestigatingPower.org features a total of five timeliner-powered timelines covering the topics of <a href="https://investigatingpower.org/mccarthyism/" target="_blank">McCarthyism</a>, <a href="https://investigatingpower.org/civil-rights/" target="_blank">Civil Rights</a>, <a href="https://investigatingpower.org/vietnam/" target="_blank">the Vietnam War</a>, <a href="https://investigatingpower.org/watergate/" target="_blank">the Watergate Scandal</a>, <a href="https://investigatingpower.org/corporate-power/" target="_blank">Corporate Power (Tobacco)</a>, and <a href="https://investigatingpower.org/9-11/" target="_blank">Post 9/11</a>.</p>
 
-		<div id="timeline" class="timeline-container">
+		<div role="region" aria-roledescription="Timeline" aria-label="Civil Rights" id="timeline" class="timeline-container">
 
 			
 			<br class="clear">
@@ -199,8 +199,8 @@ allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; pic
 			<br class="clear">
 		</div><!-- /.timelineContainer -->
 
-		
-<div id="timeline-js" class="timeline-container">
+
+<div aria-label="timeliner.js" role="region" aria-roledescription="Timeline" id="timeline-js" class="timeline-container">
 
 			<br class="clear">
 
@@ -278,8 +278,6 @@ allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; pic
 
 <script src="timelineControl.js"></script>
 <script>
-//import {timelineControl, $, $$} from "./timelineControl.js";
-
 timelineControl ($$(".timeline-container"));
 </script>
 
